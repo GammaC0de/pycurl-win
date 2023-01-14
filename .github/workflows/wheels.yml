@@ -28,6 +28,7 @@ jobs:
         uses: TheMrMilchmann/setup-msvc-dev@v2
         with:
           arch: x64
+          vs-path: C:\Program Files\Microsoft Visual Studio 14.0
 
       - name: Cache multiple paths
         id: cache-deps
