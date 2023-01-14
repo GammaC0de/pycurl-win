@@ -25,7 +25,7 @@ jobs:
           python-version: 3.8 # to run script
 
       - name: Setup Visual C++
-      - uses: TheMrMilchmann/setup-msvc-dev@v2
+        uses: TheMrMilchmann/setup-msvc-dev@v2
         with:
           arch: x64
 
