@@ -30,8 +30,7 @@ jobs:
           arch: x64
 
       - name: Test
-        run: |
-          set
+        run: env
 
       - name: Cache multiple paths
         id: cache-deps
