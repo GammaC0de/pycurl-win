@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.6.8, 3.7.9, 3.8.10]
+        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11"]
         bitness: [32, 64]
     env:
       NASM_VERSION: 2.15.05
@@ -23,6 +23,11 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8 # to run script
+
+      - name: Setup Visual C++
+      - uses: TheMrMilchmann/setup-msvc-dev@v2
+        with:
+          arch: x64
 
       - name: Cache multiple paths
         id: cache-deps
