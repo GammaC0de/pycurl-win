@@ -46,8 +46,8 @@ class Batch(object):
 
     @property
     def vc_path(self):
-        if self.bconf.vc_version in self.bconf.vc_paths and self.bconf.vc_paths[self.bconf.vc_version]:
-            path = self.bconf.vc_paths[self.bconf.vc_version]
+        path = self.bconf.vc_paths.get(self.bconf.vc_version)
+        if path:
             if not os.path.join(path, self.vcvars_relative_path):
                 raise Exception('vcvars not found in specified path')
             return path
@@ -55,6 +55,31 @@ class Batch(object):
             for path in self.bconf.default_vc_paths[self.bconf.vc_version]:
                 if os.path.exists(os.path.join(path, self.vcvars_relative_path)):
                     return path
+            vswhere_path = "%s\\Microsoft Visual Studio\\Installer\\vswhere.exe" % os.environ.get("ProgramFiles(x86)")
+            if os.path.exists(vswhere_path):
+                vc_version = "%s.0" % self.bconf.vc_version.replace("vc", "")
+                try:
+                    p = subprocess.Popen(
+                        [
+                            vswhere_path,
+                            "-products",
+                            "*",
+                            "-version",
+                            vc_version,
+                            "-property",
+                            "installationPath",
+                        ],
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE,
+                    )
+                except OSError:
+                    pass
+                else:
+                    stdout, stderr = p.communicate()
+                    if p.wait() == 0:
+                        path = stdout.decode().split("\n")[0].strip()
+                        return path
+
             raise Exception('No usable vc path found')
 
     @property
@@ -133,7 +158,7 @@ class StandardBuilder(Builder):
     def whether_to_build(self):
         if os.path.exists(self.output_dir_path):
             return False
-        return True   
+        return True
 
     def standard_fetch_extract(self, url_template):
         url = url_template % dict(
@@ -143,7 +168,7 @@ class StandardBuilder(Builder):
         archive_basename = os.path.basename(url)
         archive_name = archive_basename.replace('.tar.gz', '')
         untar(self.bconf, archive_name)
-        
+
         suffixed_dir = self.output_dir_path
         if os.path.exists(suffixed_dir):
             shutil.rmtree(suffixed_dir)
