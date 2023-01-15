@@ -42,7 +42,7 @@ class Batch(object):
 
     @property
     def vcvars_relative_path(self):
-        return 'vc/vcvarsall.bat'
+        return 'VC\\Auxiliary\\Build\\vcvarsall.bat'
 
     @property
     def vc_path(self):
