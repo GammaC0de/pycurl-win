@@ -81,6 +81,22 @@ jobs:
         run: |
           cp -r $GITHUB_WORKSPACE 'c:/dev'
 
+      - uses: actions/checkout@v1
+
+      - name: Fetch lister
+        id: pl
+        uses: Rishabh510/Path-lister-action@master
+        with:
+          path: "c:/dev/"
+          type: "*"
+
+      - name: Output results
+        run: |
+          echo "Found ${{ steps.pl.outputs.path_count }} file(s) with this extension:"
+          for i in ${{ steps.pl.outputs.paths }}; do
+          echo $i
+          done
+
       - name: Build Wheels
         run: |
           python winbuild.py -b ${{ matrix.bitness }} -p ${{ matrix.python-version }}
