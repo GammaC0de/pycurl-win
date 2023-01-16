@@ -63,7 +63,7 @@ jobs:
         run: |
           python winbuild.py builddeps -b ${{ matrix.bitness }} -p ${{ matrix.python-version }}
 
-      - name: Download
+      - name: Download Python
         run: |
           python winbuild.py downloadpy -b ${{ matrix.bitness }} -p ${{ matrix.python-version }}
 
@@ -71,7 +71,7 @@ jobs:
         run: |
           python winbuild.py assembledeps -b ${{ matrix.bitness }} -p ${{ matrix.python-version }}
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: deps-${{ matrix.bitness }}-${{ matrix.python-version }}
           path: deps/*.zip
@@ -96,7 +96,7 @@ jobs:
         run: |
           python winbuild.py test -b ${{ matrix.bitness }} -p ${{ matrix.python-version }}
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: dist-${{ matrix.bitness }}-${{ matrix.python-version }}
           path: dist/*
