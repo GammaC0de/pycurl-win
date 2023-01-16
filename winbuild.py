@@ -128,7 +128,7 @@ import os, os.path, sys, contextlib, zipfile, tempfile, glob, shutil
 from winbuild.utils import *
 from winbuild.config import *
 from winbuild.builder import *
-from winbuild.nghttp_gmake import *
+from winbuild.nghttp_cmake import *
 from winbuild.tools import *
 from winbuild.zlib import *
 from winbuild.openssl import *
