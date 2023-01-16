@@ -86,7 +86,7 @@ jobs:
       - name: List
         shell: pwsh
         run: |
-          dir /R c:/dev/*.*
+          Get-ChildItem -Recurse -Path c:/dev/ | Where { ! $_.PSIsContainer } | Select Name,FullName,Length
 
       - name: Build Wheels
         run: |
