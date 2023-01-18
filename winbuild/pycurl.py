@@ -134,4 +134,4 @@ class PycurlBuilder(Builder):
             #shutil.rmtree('pycurl-%s' % config.pycurl_version)
             rm_rf(self.bconf, self.build_dir_name)
         #check_call([tar_path, 'xf', 'pycurl-%s.tar.gz' % pycurl_version])
-        shutil.copytree('c:/dev/pycurl', self.build_dir_name)
+        # shutil.copytree('c:/dev/pycurl', self.build_dir_name)
